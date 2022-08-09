@@ -42,3 +42,7 @@ end
 group :development do
   gem "web-console"
 end
+
+# Validation and DTO
+gem 'dry-validation'
+gem 'dry-struct'
