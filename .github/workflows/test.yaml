@@ -1,0 +1,36 @@
+name: Running Rspec
+
+on:
+  pull_request_target:
+  push:
+    branches-ignore:
+      - develop
+      - main
+
+jobs:
+  rspec:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clean up
+        run: |
+          sudo rm -rf tmp/cache
+          sudo rm -rf tmp/pids
+
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Create .env_docker file
+        run: |
+          echo RAILS_ENV=test > .env_docker
+          echo DATABASE_HOST=db >> .env_docker
+          echo DATABASE_USERNAME=postgres >> .env_docker
+          echo DATABASE_PASSWORD=admin >> .env_docker
+
+      - name: Build docker images
+        run: docker-compose build
+
+      - name: Set up test database
+        run: docker-compose run --rm api rake db:create db:migrate
+
+      - name: Run Tests
+        run: docker-compose run --rm api bundle exec rspec

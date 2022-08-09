@@ -1,0 +1,41 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clean up
+        run: |
+          sudo rm -rf tmp/cache
+          sudo rm -rf tmp/pids
+
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Create .env_docker file
+        run: |
+          echo RAILS_ENV=test > .env_docker
+          echo DATABASE_HOST=db >> .env_docker
+          echo DATABASE_USERNAME=postgres >> .env_docker
+          echo DATABASE_PASSWORD=admin >> .env_docker
+
+      - name: Build docker images
+        run: docker-compose build
+
+      - name: Set up test database
+        run: docker-compose run --rm web rake db:create db:migrate
+
+      - name: Run Tests
+        run: docker-compose run --rm web bundle exec rspec
+
+      - name: Deploy on Heroku
+        uses: akhileshns/heroku-deploy@v3.8.8
+        with:
+          heroku_api_key:  ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: ${{secrets.HEROKU_PROD_PROJECT_NAME}}
+          heroku_email:    ${{secrets.HEROKU_EMAIL}}
