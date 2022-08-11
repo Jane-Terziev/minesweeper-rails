@@ -1,24 +1,40 @@
-# README
+## Links to dev and prod servers
+https://dev-minesweeper-rails-demo.herokuapp.com/
+https://minesweeper-rails-demo.herokuapp.com/
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Getting started locally
 
-Things you may want to cover:
+To get started locally, you are required to have postgres, redis and the ruby version specified in the Gemfile.
 
-* Ruby version
+```ruby
+cp .env_sample .env
+```
+Populate the required environment variables.
 
-* System dependencies
+```ruby
+bundle install
+rake db:create db:migrate
+rails s
+```
 
-* Configuration
+To run the tests:
+```ruby
+rake db:migrate RAILS_ENV=test
+rspec
+```
 
-* Database creation
+## With docker:
+If you have docker installed, you need to run the following commands:
 
-* Database initialization
+```ruby
+cp .env_docker_sample .env_docker
+docker-compose build
+docker-compose run --rm web rake db:create db:migrate
+docker-compose up
+```
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+To run the tests:
+```ruby
+docker-compose run --rm web rake db:migrate RAILS_ENV=test
+docker-compose run --rm web rspec
+```
