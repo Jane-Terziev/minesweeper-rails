@@ -25,15 +25,20 @@ services:
     depends_on:
       - 'db'
       - 'redis'
-    build: .
+    build:
+      dockerfile: Dockerfile
+      context: .
     command: bundle exec puma -C config/puma.rb
     ports:
       - '3000:3000'
     volumes:
       - '.:/minesweeper-rails'
+      - 'bundle:/usr/local/bundle'
     env_file:
       - '.env_docker'
 
 volumes:
   redis:
   postgres:
+  bundle:
+    driver: local

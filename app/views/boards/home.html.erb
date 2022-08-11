@@ -1,0 +1,7 @@
+<h5>Recent Boards</h5>
+<% if @boards.empty? %>
+  <p>No recent boards.</p>
+<% else %>
+  <%= render 'recent_boards_table', boards: @boards %>
+  <%= link_to 'View All Generated Boards', boards_path, class: "btn btn-primary" %>
+<% end %>

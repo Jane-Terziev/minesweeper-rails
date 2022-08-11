@@ -1,0 +1,10 @@
+<h5>Boards Table</h5>
+<div class="d-flex align-items-end justify-content-end">
+  <%= link_to "New Board", new_board_path, class: "btn btn-primary btn-lg"%>
+</div>
+<% if @boards.empty? %>
+  <p>No boards available.</p>
+<% else %>
+  <%= render 'table', boards: @boards, sorting: @sorting %>
+  <%== pagy_bootstrap_nav(@pagy) %>
+<% end %>

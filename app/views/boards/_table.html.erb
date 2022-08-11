@@ -1,0 +1,21 @@
+<table class="table table-bordered table-striped table-responsive">
+  <thead>
+  <% @table_headers.each do |header_info| %>
+    <th>
+      <%= sort_link(label: header_info[:label], sort: header_info[:sort_column]) %>
+      <%= sort_indicator if params[:sort] == header_info[:sort_column] %>
+    </th>
+  <% end %>
+  </thead>
+  <tbody>
+  <% boards.each do |board| %>
+    <tr>
+      <td> <%= link_to board.name, board_path(board.id) %> </td>
+      <td> <%= board.email %> </td>
+      <td> <%= board.width %> </td>
+      <td> <%= board.height %> </td>
+      <td style="width: 15%"> <%= board.bombs %> </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
