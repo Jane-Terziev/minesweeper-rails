@@ -1,5 +1,8 @@
 ## Links to dev and prod servers
+DEVELOPMENT:
 https://dev-minesweeper-rails-demo.herokuapp.com/
+
+PRODUCTION:
 https://minesweeper-rails-demo.herokuapp.com/
 
 ## Getting started locally
