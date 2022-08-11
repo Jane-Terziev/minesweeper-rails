@@ -1,16 +1,18 @@
-<table class="table table-bordered table-striped table-responsive">
+<div class="table-responsive">
+  <table class="table table-bordered table-striped">
     <thead>
     <% @table_headers.each do |header_info| %>
-    <th> <%= header_info[:label] %> </th>
+      <th> <%= header_info[:label] %> </th>
     <% end %>
     </thead>
     <tbody>
     <% boards.each do |board| %>
-    <tr>
+      <tr>
         <td> <%= link_to board.name, board_path(board.id) %> </td>
         <td> <%= board.email %> </td>
         <td style="width: 15%"> <%= time_tag board.created_at %></td>
-    </tr>
+      </tr>
     <% end %>
     </tbody>
-</table>
+  </table>
+</div>
