@@ -1,6 +1,6 @@
 <div class="row">
-  <div class="col-3"></div>
-  <div class="col-6">
+  <div class="col-1"></div>
+  <div class="col-10">
     <% if @board.matrix.present? %>
       <%= render 'grid', board: @board %>
       <% else %>
@@ -13,12 +13,13 @@
         </div>
       <% end %>
     <% end %>
-    <h2>Email: <%= @board.email %></h2>
-    <h2>Name: <%= @board.name %></h2>
-    <h2>Width: <%= @board.width %></h2>
-    <h2>Height: <%= @board.height %></h2>
-    <h2>Number of Bombs: <%= @board.bombs %></h2>
-    <h2>Generated_at: <%= time_tag @board.created_at %></h2>
+    <h3>Email: <%= @board.email %></h3>
+    <h3>Name: <%= @board.name %></h3>
+    <h3>Width: <%= @board.width %></h3>
+    <h3>Height: <%= @board.height %></h3>
+    <h3>Number of Bombs: <%= @board.bombs %></h3>
+    <h3>Generated_at: <%= time_tag @board.created_at %></h3>
+    <hr>
+    <%= link_to "Back", boards_path, class: 'btn btn-danger btn-lg mb-5' %>
   </div>
-  <div class="col-3"></div>
 </div>
