@@ -1,0 +1,16 @@
+<%= render 'shared/notification' %>
+<%= bootstrap_form_for(board, data: { turbo: false }) do |f| %>
+  <%= f.email_field :email %>
+  <%= f.text_field :name %>
+  <%= f.number_field :width %>
+  <%= f.number_field :height %>
+  <%= f.number_field :bombs %>
+  <div class="row">
+    <div class="col-6">
+      <%= f.submit "Generate Board", class: 'btn btn-primary btn-lg' %>
+    </div>
+    <div class="col-6 d-flex align-items-end justify-content-end">
+      <%= link_to "Cancel", boards_path, class: "btn btn-danger btn-lg"%>
+    </div>
+  </div>
+<% end %>

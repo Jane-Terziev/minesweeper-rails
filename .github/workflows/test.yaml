@@ -30,7 +30,7 @@ jobs:
         run: docker-compose build
 
       - name: Set up test database
-        run: docker-compose run --rm api rake db:create db:migrate
+        run: docker-compose run --rm web rake db:create db:migrate
 
       - name: Run Tests
-        run: docker-compose run --rm api bundle exec rspec
+        run: docker-compose run --rm web bundle exec rspec
