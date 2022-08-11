@@ -1,6 +1,10 @@
 class Board < ApplicationRecord
   has_one :board_matrix, foreign_key: :board_id, primary_key: :id
 
+  WIDTH_MIN_SIZE = 2.freeze
+  HEIGHT_MIN_SIZE = 2.freeze
+  BOMBS_MIN_SIZE = 1.freeze
+
   def self.get_boards(order_params:, page_request:)
     paginate(
         collection: order(order_params),
