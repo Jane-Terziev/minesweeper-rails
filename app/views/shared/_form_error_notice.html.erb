@@ -1,0 +1,14 @@
+<% if flash[:form_error_notice].present? %>
+  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <% if flash[:form_error_notice].instance_of?(Array) %>
+      <ul>
+        <% flash[:form_error_notice].each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p> <%= flash[:form_error_notice] %> </p>
+    <% end %>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+<% end %>

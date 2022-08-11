@@ -24,7 +24,6 @@ RSpec.describe BoardsController, type: :controller do
 
         expect(assigns[:boards]).to eq(boards)
         expect(assigns[:pagy].class).to eq(Pagy)
-        expect(assigns[:sorting]).to be_truthy
       end
     end
 
@@ -84,7 +83,7 @@ RSpec.describe BoardsController, type: :controller do
         post :create, params: params
 
         expect(response.status).to eq(302)
-        expect(response).to redirect_to(boards_url)
+        expect(response).to redirect_to(board_path(Board.last))
         expect(Board.all.count).to eq(1)
       end
     end

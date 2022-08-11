@@ -1,13 +1,9 @@
-<table class="table table-stripped table-responsive">
+<table class="table table-bordered table-striped table-responsive">
   <thead>
   <% @table_headers.each do |header_info| %>
     <th>
-      <% if @sorting %>
-        <%= sort_link(label: header_info[:label], sort: header_info[:sort_column]) %>
-        <%= sort_indicator if params[:sort] == header_info[:sort_column] %>
-      <% else %>
-        <%= header_info[:label] %>
-      <% end %>
+      <%= sort_link(label: header_info[:label], sort: header_info[:sort_column]) %>
+      <%= sort_indicator if params[:sort] == header_info[:sort_column] %>
     </th>
   <% end %>
   </thead>
@@ -18,7 +14,7 @@
       <td> <%= board.email %> </td>
       <td> <%= board.width %> </td>
       <td> <%= board.height %> </td>
-      <td> <%= board.bombs %> </td>
+      <td style="width: 15%"> <%= board.bombs %> </td>
     </tr>
   <% end %>
   </tbody>

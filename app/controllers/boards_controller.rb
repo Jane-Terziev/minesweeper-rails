@@ -7,14 +7,22 @@ class BoardsController < ApplicationController
 
   def home
     @boards = @board_read_service.get_recent_boards
-    set_table_headers
-    @sorting = false
+    @table_headers = [
+        { label: 'Name' },
+        { label: 'Email' },
+        { label: 'Generated At' }
+    ]
   end
 
   def index
     @pagy, @boards = @board_read_service.get_boards(order_params: order_params, page_request: page_request)
-    set_table_headers
-    @sorting = true
+    @table_headers = [
+        { label: 'Name', sort_column: 'name' },
+        { label: 'Email', sort_column: 'email' },
+        { label: 'Width', sort_column: 'width' },
+        { label: 'Height', sort_column: 'height' },
+        { label: 'Bombs', sort_column: 'bombs' }
+    ]
   end
 
   def new
@@ -23,12 +31,13 @@ class BoardsController < ApplicationController
 
   def create
     whitelisted_params = @contract_validator.validate(board_params.to_h, CreateBoardContract.new)
-    @board_service.create_board(whitelisted_params)
+    board = @board_service.create_board(whitelisted_params)
 
-    redirect_to boards_url, notice: "Board created successfully."
+    flash[:success_notice] =  "Board created successfully."
+    redirect_to board_path(board)
   rescue ConstraintError => e
     @board = Board.new(board_params.to_h)
-    flash.now[:errors] = e.messages
+    flash[:form_error_notice] = e.messages
     render :new, status: Http::STATUS_UNPROCESSABLE_ENTITY
   end
 
@@ -49,20 +58,10 @@ class BoardsController < ApplicationController
     { valid_sort_params[:sort] => valid_sort_params[:direction] }
 
   rescue ConstraintError => e
-    flash[:notice] = e.messages
     params.delete(:sort)
     params.delete(:direction)
+    flash[:error_notice] = e.messages
     index
-    render :index and return
-  end
-
-  def set_table_headers
-    @table_headers = [
-        { label: 'Name', sort_column: 'name' },
-        { label: 'Email', sort_column: 'email' },
-        { label: 'Width', sort_column: 'width' },
-        { label: 'Height', sort_column: 'height' },
-        { label: 'Bombs', sort_column: 'bombs' }
-    ]
+    render :index, error_notice: e.messages and return
   end
 end

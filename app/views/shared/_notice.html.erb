@@ -1,9 +1,0 @@
-<% if flash[:notice].present? %>
-  <div class="alert alert-danger" role="alert">
-    <ul>
-      <% flash[:notice].each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-    </ul>
-  </div>
-<% end %>
