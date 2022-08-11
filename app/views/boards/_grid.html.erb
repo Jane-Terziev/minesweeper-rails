@@ -3,12 +3,10 @@
   <% board.matrix.each do |row| %>
     <tr>
       <% row.each do |col| %>
-        <td>
-          <div style="width: 50px; height: 50px; overflow: hidden" class="text-center">
-            <% if col == "1" %>
-              <%= image_tag "/bomb.png" %>
-            <% end %>
-          </div>
+        <td style="width: 50px; height: 50px" align="center">
+          <% if col == "1" %>
+            <%= image_tag "/bomb.png" %>
+          <% end %>
         </td>
       <% end %>
     </tr>
